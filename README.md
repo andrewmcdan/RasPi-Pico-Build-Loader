@@ -25,9 +25,16 @@ add_custom_command(TARGET your_projects_target
 ```bat
 copy "P:\Documents\RasPi Pico\i2c slave testing\build\i2c_slave_test.uf2" i:
 ```
+8. Click the build button (or run make directly) and wait. A command prompt window should pop up, and right before it exits, you should see "1 file copied successfully" (or something very similar). If this doesn't show up, something when awry. 
 
 ## How it works
 Within the Pico-SDK there's a secret BAUD that will reset the Pico and boot it into the uf2 loader. By default it's 1200 baud. As long as you haven't messed with this special sauce, it should work without any modifications to your code.
+
+The lines added to CMakeLists.txt tells Make to run "COMMAND pre-load" each time the project is built. "pre-load.bat" then runs the task "LoadFileOntoPico" using the Task Schedule command line. The task runs load.bat. 
+
+The intermediary step of using Task Scheduler, instead of just running load.bat directly, is required to keep Make from stalling. This would happen because Make monitors sub-processes that are started by any part of the make preocess in order to ensure that each step completes before starting another. 
+
+But because this script starts putty to monitor serial traffic at the end of load.bat, Make would wait for putty to exit before, itself, exiting. But, using Task Scheduler means that load.bat is started as a sub-process of svchost.exe, which Make can't/doesn't monitor. "pre-load.bat" finishes and Make continues happily along without stalling. And your uf2 file gets copied to your Pico.
 
 load.bat peforms the following:
 1. Kill any instances of putty.exe to ensure that the serial port will be available (your should also make sure you don't have another program using the COM port for your Pico).
