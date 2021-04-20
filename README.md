@@ -7,7 +7,7 @@ Windows Bat script to load the uf2 file onto the Pico.
 1. Create a new task in Task Scheduler named "LoadFileOntoPico" that runs load.bat.
 This task should be setup so that it can only be run manually (i.e. no schedule).
 2. Download and install putty from putty.org. 
-3. Add the following to your CMakeLists.txt file:
+3. Add the following to your CMakeLists.txt file.
 See the file example file provided with in this repo. It was pulled from a working project.
 ```make
 add_custom_command(TARGET your_projects_target
