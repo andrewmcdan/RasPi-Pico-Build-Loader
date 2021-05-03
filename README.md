@@ -21,7 +21,7 @@ add_custom_command(TARGET your_projects_target
 4. Copy "pre-load.bat" and "load.bat" to your build folder.
 5. Update the paths in "load.bat" to match your system. The path to putty.exe and the .uf2 file you want to load must be updated for this to work on your system.
 6. Update the COM-port number in "load.bat" to match the COM port that shows up when you plug in your Pico.
-7. Update the drive letter at the end of the line to whatever drive letter your Pico shows up as: (drive "i:" in my case)
+~~7. Update the drive letter at the end of the line to whatever drive letter your Pico shows up as: (drive "i:" in my case)~~ No longer needed.
 ```bat
 copy "P:\Documents\RasPi Pico\i2c slave testing\build\i2c_slave_test.uf2" i:
 ```
@@ -40,8 +40,9 @@ load.bat peforms the following:
 1. Kill any instances of putty.exe to ensure that the serial port will be available (your should also make sure you don't have another program using the COM port for your Pico).
 2. Start putty with options set for the Pico's com port and 1200 baud.
 3. Kill putty again. When putty connects at 1200baud, the Pico resets and putty shows an error. This step kills putty just so the user doesn't have to click the error window. 
-4. Copy the uf2 file to the drive that the Pico shows up as.
-5. Start putty to connect to the Pico to display serial output.
+4. Find the drive letter for the PICO.
+5. Copy the uf2 file to the drive that the Pico shows up as.
+6. Start putty to connect to the Pico to display serial output.
 
 The "TIMEOUT" lines in "load.bat" are there to give each step time to complete. The whole process takes about 10 seconds to load the uf2 onto the Pico, but it could be faster if you tune the TIMEOUTs in your configuration. 
 You can remove the last START if you don't want putty starting back up after loading the file.
