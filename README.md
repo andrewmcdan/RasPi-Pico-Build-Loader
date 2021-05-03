@@ -1,4 +1,4 @@
-# RasPi-Pico-Build-Loader
+# RasPi Pico Build Loader
 Windows Bat script to load the uf2 file onto the Pico.
 ## Requirements
 - An existing and functional Pico dev environment.
