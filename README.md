@@ -21,7 +21,7 @@ add_custom_command(TARGET your_projects_target
 4. Copy "pre-load.bat" and "load.bat" to your build folder.
 5. Update the paths in "load.bat" to match your system. The path to putty.exe and the .uf2 file you want to load must be updated for this to work on your system.
 6. Update the COM-port number in "load.bat" to match the COM port that shows up when you plug in your Pico.
-~~7. Update the drive letter at the end of the line to whatever drive letter your Pico shows up as: (drive "i:" in my case)~~ No longer needed.
+7. ~~Update the drive letter at the end of the line to whatever drive letter your Pico shows up as: (drive "i:" in my case)~~ No longer needed.
 ```bat
 copy "P:\Documents\RasPi Pico\i2c slave testing\build\i2c_slave_test.uf2" i:
 ```
