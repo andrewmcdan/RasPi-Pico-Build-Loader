@@ -10,6 +10,8 @@
 
 @echo off
 echo.
+set /A loopCount = 1
+:beginOfScript
 echo checking for running PuTTy.exe
 echo.
 tasklist /FI "IMAGENAME eq putty.exe" 2>NUL | find /I /N "putty.exe">NUL
@@ -19,7 +21,6 @@ START "" "E:\Program Files (x86)\PuTTY\putty.exe" -serial COM6 -sercfg 1200,8,n,
 echo Waiting for PICO to load bootloader.
 TIMEOUT /t 1 /nobreak
 TASKKILL /f /im putty.exe
-set /A loopCount = 1
 echo Finding PICO...
 :checkLoop
 setlocal
@@ -28,7 +29,9 @@ for %%i in (d:,e:,f:,g:,h:,i:,j:,k:,l:,m:,n:,o:,p:,q:,r:,s:,t:,u:,v:,w:,x:,y:,z:
     echo Checking for PICO as drive %%i
     set /A loopCount = %loopCount% + 1
 )
-if %loopCount% == 3 goto :notFound
+if %loopCount% == 2 TIMEOUT /t 2 /nobreak & goto :beginOfScript
+if %loopCount% == 3 TIMEOUT /t 2 /nobreak & goto :beginOfScript
+if %loopCount% == 4 goto :notFound
 goto :checkLoop
 :IsRPI_PICO
 setlocal
@@ -65,12 +68,15 @@ endlocal & set "%2=%label_%"
 exit /b 0
 :notFound
 echo PICO not found. Exiting.
+TIMEOUT /t 4 /nobreak
 goto :EOF
 :FoundPICO
 echo PICO was found. Copying.
 copy "P:\Documents\RasPi Pico\i2c slave testing\build\i2c_slave_test.uf2" %~1
 echo Waiting for PICO to reboot before starting serial terminal
 TIMEOUT /t 2 /nobreak
+
+@REM The following lines can be removed if you like.
 START "" "E:\Program Files (x86)\PuTTY\putty.exe" -serial COM6 -sercfg 115200,8,n,1,N
 echo PuTTy was started. Switching to PuTTy.
 nircmd win activate process putty.exe
